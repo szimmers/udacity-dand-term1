@@ -29,6 +29,11 @@ def read_data_for_variance_analysis(filename):
 
 
 def str_to_bool(s):
+    """
+    csv files have strings for True and False, this converts them to bools.
+    :param s:
+    :return:
+    """
     if s == 'True':
         return True
     elif s == 'False':
@@ -38,10 +43,23 @@ def str_to_bool(s):
 
 
 def convert_ratio_to_pct_for_display(value):
+    """
+    label function for turning a ratio into a % value to 1 decimal place
+    :param value:
+    :return:
+    """
     return "{:.1f}%".format(value * 100)
 
 
 def get_ratio_same_station_dropoff(rides, include_weekend_only=False, include_female_only=False, include_user_types="BOTH"):
+    """
+    given data for rides, return the ratio for which rides concluded at the start station
+    :param rides:   the ride data
+    :param include_weekend_only: should the ratio examine the rides on the weekend only
+    :param include_female_only:    should the ratio examine the rides for females only
+    :param include_user_types:  the type of riders to consider, either Subscriber, Customer, or BOTH.
+    :return:
+    """
     same_station_count = 0
     diff_station_count = 0
 
