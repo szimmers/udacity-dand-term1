@@ -54,10 +54,14 @@ def condense_data_for_station_variance(in_file, out_file, city):
     This function takes full data from the specified input file
     and writes the condensed data to a specified output file. The city
     argument determines how the input file will be parsed.
-
-    HINT: See the cell below to see how the arguments are structured!
+    :param in_file:
+    :param out_file:
+    :param city:
+    :return:
     """
 
+    # the age may be off by a year, depending on when the rider's actual birthday is
+    # compared to when this is run
     current_year = datetime.now().year
 
     with open(out_file, 'w') as f_out, open(in_file, 'r') as f_in:
