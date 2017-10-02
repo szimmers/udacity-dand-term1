@@ -110,25 +110,29 @@ def get_datapoints_gender_age(rides):
     return data
 
 
-def put_gender_age_datapoints_into_bins(data):
+def put_gender_age_datapoints_into_bins(data, binsize=5):
     """
     given datapoints with age and gender, separate into bins separated by gender and
-    age bins of 5 years
-    :param data:
+    age bins of 5 years (by default). Ignores any ages > 100.
+    :param data:    the ride data with age and gender
+    :param binsize: the size, in years, of each bin. we'll plot ages 0-100
     :return:
     """
 
-    # each bin is 5 years (of age). we'll toss any ages > 100. these will represent
+    # by default, we'll do 20 bins.
+    num_bins = 100 // binsize
+
+    # each bin is 5 years of age, by default. we'll toss any ages > 100. these will represent
     # counts of ages for that bin.
-    male_bins = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-    female_bins = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+    male_bins = [0] * num_bins
+    female_bins = [0] * num_bins
 
     for datum in data:
         age = int(datum['age'])
         gender = datum['gender']
 
         if 0 < age <= 100:
-            bin_number = age // 5
+            bin_number = age // binsize
             if gender == 'Male':
                 male_bins[bin_number] += 1
             elif gender == 'Female':
@@ -156,3 +160,8 @@ def put_gender_age_datapoints_into_bins(data):
 # ratio_customers_only = get_ratio_same_station_dropoff(rides, False, False, 'Customer')
 # print('customers only', convert_ratio_to_pct_for_display(ratio_customers_only))
 
+# pointdata = get_datapoints_gender_age(rides)
+# male_bins, female_bins = put_gender_age_datapoints_into_bins(pointdata, 10)
+#
+# print(male_bins)
+# print(female_bins)
