@@ -1,0 +1,74 @@
+import pandas as pd
+
+df = pd.read_csv('cancer_data.csv')
+df.head()
+
+# this returns a tuple of the dimensions of the dataframe
+df.shape
+
+# this returns the datatypes of the columns
+df.dtypes
+
+# although the datatype for diagnosis appears to be object, further
+# investigation shows it's a string
+type(df['diagnosis'][0])
+
+# this displays a concise summary of the dataframe,
+# including the number of non-null values in each column
+df.info()
+
+# this returns the number of unique values in each column
+df.nunique()
+
+# this returns useful descriptive statistics for each column of data
+df.describe()
+
+df.head(2)
+df.tail(3)
+
+# View the index number and label for each column
+for i, v in enumerate(df.columns):
+    print(i, v)
+
+# select all the columns from 'id' to the last mean column
+df_means = df.loc[:,'id':'fractal_dimension_mean']
+df_means.head()
+
+# repeat the step above using index numbers
+df_means = df.iloc[:,:11]
+df_means.head()
+
+df_means.to_csv('cancer_data_means.csv', index=False)
+
+
+df["weight"].mean()
+
+# 75th percentile of hours-per-week
+df["hours-per-week"].quantile(.75)
+
+
+import numpy as np
+
+se_cols = np.r_[0:2, 12:22]
+#print(se_cols)
+df_se = df.iloc[:,se_cols]
+df_se.head()
+
+*** CLEANING ***
+
+# fill in missing data w/ mean of column
+mean = df["duration"].mean()
+df["duration"].fillna(mean, inplace=True)
+
+# find duplicates
+df.duplicated()
+
+# removing duplicates (entire row is duplicated)
+df.drop_duplicates(inplace=True)
+
+
+# convert str to datetime
+df["ts"] = pd.to_datetime(df["ts"])
+
+
+
