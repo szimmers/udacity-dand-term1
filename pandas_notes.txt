@@ -62,6 +62,8 @@ df["duration"].fillna(mean, inplace=True)
 
 # find duplicates
 df.duplicated()
+# count them
+sum(df.duplicated())
 
 # removing duplicates (entire row is duplicated)
 df.drop_duplicates(inplace=True)
@@ -69,6 +71,18 @@ df.drop_duplicates(inplace=True)
 
 # convert str to datetime
 df["ts"] = pd.to_datetime(df["ts"])
+
+
+# remove "_mean" from column names
+new_labels = []
+for col in df.columns:
+    if '_mean' in col:
+        new_labels.append(col[:-5])  # exclude last 6 characters
+    else:
+        new_labels.append(col)
+
+# assign new labels to columns in dataframe
+df.columns = new_labels
 
 
 
