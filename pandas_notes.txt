@@ -123,6 +123,28 @@ df.plot(x='compactness', y='concavity', kind='scatter');
 df['concave_points'].plot(kind='box');
 
 
+*** SUMMARY STATS ***
+
+# create new data frames using masks
+df_m = df[df["diagnosis"] == "M"]
+df_m.head()
+
+# see summary stats about area feature
+df_m['area'].describe()
+
+# create 1 chart comparing 2 means
+import matplotlib.pyplot as plt
+% matplotlib inline
+
+fig, ax = plt.subplots(figsize=(8, 6))
+ax.hist(df_b['area'], alpha=0.5, label='benign')
+ax.hist(df_m['area'], alpha=0.5, label='malignant')
+ax.set_title('distributions of benign and malignant tumor areas')
+ax.set_xlabel('Area')
+ax.set_ylabel('Count')
+ax.legend(loc='upper right')
+plt.show()
+
 
 
 
