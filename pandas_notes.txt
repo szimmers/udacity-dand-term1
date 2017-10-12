@@ -84,5 +84,47 @@ for col in df.columns:
 # assign new labels to columns in dataframe
 df.columns = new_labels
 
+*** PLOTTING ***
+
+import pandas as pd
+% matplotlib inline
+
+df = pd.read_csv('census.csv')
+df.info()
+
+# show array and various hists
+df.hist()
+
+# resize and hide array
+df.hist(figsize=(8,8));
+
+# show particular hist
+df['age'].hist();
+df['age'].plot(kind='hist');
+
+# get counts of unique values
+df['education'].value_counts()
+
+# plot it to bar chart
+df['education'].value_counts().plot(kind='bar');
+
+# plot it to pie chart
+df['workclass'].value_counts().plot(kind='pie', figsize=(8,8));
+
+df = pd.read_csv('cancer.csv')
+
+# get overview of scatters
+pd.plotting.scatter_matrix(df, figsize=(15,15));
+
+# show scatter
+df.plot(x='compactness', y='concavity', kind='scatter');
+
+# show box
+df['concave_points'].plot(kind='box');
+
+
+
+
+
 
 
