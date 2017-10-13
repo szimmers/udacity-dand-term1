@@ -146,7 +146,29 @@ ax.legend(loc='upper right')
 plt.show()
 
 
+*** EXAMPLES ***
 
+# for some store sales data, show total sales from last month.
+# stores are storeA -> storeE
+# "week" looks like 2014-05-04
 
+from datetime import datetime, timedelta
+# total sales for the last month
+max_week = max(df["week"])
+#print(max_week)
+d = datetime.strptime(max_week, '%Y-%m-%d')
+dstart = d - timedelta(weeks=4)
+start_month_of_max_week = dstart.strftime('%Y-%m-%d')
+#print(start_month_of_max_week)
 
+df_max = df[(df['week'] > start_month_of_max_week) & (df['week'] <= max_week)]
+#df_max.head()
 
+df_max_stores_summed = df_max.loc[:,'storeA':'storeE'].sum()
+sum(df_max_stores_summed)
+
+# average sales
+# (is this the average of all sales per month, across stores?)
+df_all_stores_summed = df.loc[:,'storeA':'storeE'].sum()
+row_count = df.shape[0]
+sum(df_all_stores_summed/row_count)
