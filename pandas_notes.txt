@@ -165,10 +165,40 @@ df_max = df[(df['week'] > start_month_of_max_week) & (df['week'] <= max_week)]
 #df_max.head()
 
 df_max_stores_summed = df_max.loc[:,'storeA':'storeE'].sum()
-sum(df_max_stores_summed)
+print("total sales for last month: {}".format(sum(df_max_stores_summed)))
+print(df_max_stores_summed)
+
 
 # average sales
 # (is this the average of all sales per month, across stores?)
 df_all_stores_summed = df.loc[:,'storeA':'storeE'].sum()
 row_count = df.shape[0]
 sum(df_all_stores_summed/row_count)
+
+# no, it means Which store makes the most sales on average?
+df_each_store_summed = df.loc[:,'storeA':'storeE'].mean()
+print(df_each_store_summed)
+
+
+# sales on march 13, 2016
+# Which store sells the most during the week of March 13th, 2016?
+
+df_target_week = df[(df['week'] == '2016-03-13')]
+df_target_week.head()
+
+# worst week for store C
+#df_store_c = df.loc[:,'storeC':'storeC']
+df_store_c = df[['week','storeC']]
+#df_store_c.head()
+df_store_c.loc[df['storeC'].idxmin()]
+
+# total sales during most recent 3 month period
+dstart_3mo = d - timedelta(weeks=3*4)
+dstart_3mo_week = dstart_3mo.strftime('%Y-%m-%d')
+#print(dstart_3mo_week)
+
+df_3mo = df[(df['week'] > dstart_3mo_week) & (df['week'] <= max_week)]
+#df_3mo.head()
+df_3mo_summed = df_3mo.loc[:,'storeA':'storeE'].sum()
+df_3mo_summed
+
