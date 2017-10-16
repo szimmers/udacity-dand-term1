@@ -254,7 +254,7 @@ dstart = d - timedelta(weeks=4)
 start_month_of_max_week = dstart.strftime('%Y-%m-%d')
 
 df_last_mo = df[(df['week'] > start_month_of_max_week) & (df['week'] <= max_week)]
-df_last_mo_summed = df_max.loc[:,'storeA':'storeE'].sum()
+df_last_mo_summed = df_last_mo[:,'storeA':'storeE'].sum()
 
 df_last_mo_summed.plot(kind='bar');
 
@@ -263,6 +263,22 @@ df_last_mo_summed.plot(kind='bar');
 # Which store makes the most sales on average?
 df_each_store_summed = df.loc[:,'storeA':'storeE'].mean()
 df_each_store_summed.plot(kind='bar');
+
+
+# sales for the week of March 13th, 2016
+# Which store sells the most during the week of March 13th, 2016?
+df_target_week = df[(df['week'] == '2016-03-13')]
+df_target_week
+
+df_target_week_stores = df_target_week.loc[:,'storeA':'storeE']
+# plot default bar, but x-axis shows index :-(
+df_target_week_stores.plot(kind='bar');
+
+# ok can convert it to a series and plot that
+
+df_target_week_stores_series = df_target_week_stores.squeeze()
+df_target_week_stores_series.plot(kind='bar');
+
 
 
 
