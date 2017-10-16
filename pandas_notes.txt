@@ -259,5 +259,11 @@ df_last_mo_summed = df_max.loc[:,'storeA':'storeE'].sum()
 df_last_mo_summed.plot(kind='bar');
 
 
+# average sales
+# Which store makes the most sales on average?
+df_each_store_summed = df.loc[:,'storeA':'storeE'].mean()
+df_each_store_summed.plot(kind='bar');
+
+
 
 
