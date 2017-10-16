@@ -148,6 +148,8 @@ plt.show()
 
 *** EXAMPLES ***
 
+# from Lesson 3: The Data Analysis Process / 24. Drawing Conclusions Quiz
+
 # for some store sales data, show total sales from last month.
 # stores are storeA -> storeE
 # "week" looks like 2014-05-04
@@ -201,4 +203,66 @@ df_3mo = df[(df['week'] > dstart_3mo_week) & (df['week'] <= max_week)]
 #df_3mo.head()
 df_3mo_summed = df_3mo.loc[:,'storeA':'storeE'].sum()
 df_3mo_summed
+
+*** MORE VISUALIZATIONS (including indices) ***
+
+import pandas as pd
+% matplotlib inline
+
+df_census = pd.read_csv('census_income_data.csv')
+
+df_a = df_census[df_census['income'] == '>50K']
+df_b = df_census[df_census['income'] == '<=50K']
+
+ind = df_a['education'].value_count().index
+
+df_a['education'].value_counts()[ind].plot(kind='bar');
+df_b['education'].value_counts()[ind].plot(kind='bar');
+
+ind = df_a['workclass'].value_counts().index
+df_a['work class'].value_counts()[ind].plot(kind='pie', figsize=(8,8));
+
+df_a['age'].hist();
+df_b['age'].hist();
+
+df_a['age'].describe()
+df_b['age'].describe()
+
+*** # from Lesson 3: The Data Analysis Process / 27. Communicating Results Practice
+*** 
+
+# imports and load data
+import pandas as pd
+% matplotlib inline
+
+df = pd.read_csv('store_data.csv')
+
+df.head()
+
+# explore data
+df.shape
+
+# sales for the last month
+# Which store has the highest total sales for the last month?
+from datetime import datetime, timedelta
+max_week = max(df["week"])
+
+d = datetime.strptime(max_week, '%Y-%m-%d')
+dstart = d - timedelta(weeks=4)
+start_month_of_max_week = dstart.strftime('%Y-%m-%d')
+
+df_last_mo = df[(df['week'] > start_month_of_max_week) & (df['week'] <= max_week)]
+df_last_mo_summed = df_max.loc[:,'storeA':'storeE'].sum()
+
+# this looks right
+df_last_mo_summed
+
+# this creates the column, but all values are NaN
+#df_last_mo.assign(total_sales = df_last_mo_summed)
+
+# this plots each week, i want them summed
+#df_last_mo.plot(kind='bar');
+
+
+
 
