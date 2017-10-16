@@ -244,6 +244,8 @@ df.shape
 
 # sales for the last month
 # Which store has the highest total sales for the last month?
+# c.f. https://stackoverflow.com/questions/32105817/plot-entire-row-on-pandas/32105953#32105953
+
 from datetime import datetime, timedelta
 max_week = max(df["week"])
 
@@ -254,14 +256,7 @@ start_month_of_max_week = dstart.strftime('%Y-%m-%d')
 df_last_mo = df[(df['week'] > start_month_of_max_week) & (df['week'] <= max_week)]
 df_last_mo_summed = df_max.loc[:,'storeA':'storeE'].sum()
 
-# this looks right
-df_last_mo_summed
-
-# this creates the column, but all values are NaN
-#df_last_mo.assign(total_sales = df_last_mo_summed)
-
-# this plots each week, i want them summed
-#df_last_mo.plot(kind='bar');
+df_last_mo_summed.plot(kind='bar');
 
 
 
