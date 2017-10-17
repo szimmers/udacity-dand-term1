@@ -1,6 +1,8 @@
 import pandas as pd
 
 df = pd.read_csv('cancer_data.csv')
+# df = pd.read_csv('cancer_data.csv', sep=';')
+
 df.head()
 
 # this returns a tuple of the dimensions of the dataframe
@@ -20,7 +22,7 @@ df.info()
 # this returns the number of unique values in each column
 df.nunique()
 
-# this returns useful descriptive statistics for each column of data
+# this returns useful descriptive statistics for each column of data (e.g. mean, std, count)
 df.describe()
 
 df.head(2)
