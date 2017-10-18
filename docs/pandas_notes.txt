@@ -298,6 +298,18 @@ df.groupby(['quality', 'color'], as_index=False).mean()
 df.groupby(['quality', 'color'], as_index=False)['pH'].mean()
 
 
+*** QUERY ***
+
+# selecting malignant records in cancer data
+df_m = df[df['diagnosis'] == 'M']
+df_m = df.query('diagnosis == "M"')
+
+# selecting records of people making over $50K
+df_a = df[df['income'] == ' >50K']
+df_a = df.query('income == " >50K"')
+
+# query returns a dataframe
+
 
 
 
