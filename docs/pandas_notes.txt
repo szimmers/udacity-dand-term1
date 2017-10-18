@@ -24,6 +24,7 @@ df.nunique()
 
 # this returns useful descriptive statistics for each column of data (e.g. mean, std, count)
 df.describe()
+df.describe()['pH']
 
 df.head(2)
 df.tail(3)
@@ -280,6 +281,22 @@ df_target_week_stores.plot(kind='bar');
 
 df_target_week_stores_series = df_target_week_stores.squeeze()
 df_target_week_stores_series.plot(kind='bar');
+
+
+*** GROUP BY ***
+
+# show all means for a each quality
+df.groupby('quality').mean()
+
+# show all means for each quality and color
+df.groupby(['quality', 'color']).mean()
+
+# ensure neither quality or color are index (unsure what this means)
+df.groupby(['quality', 'color'], as_index=False).mean()
+
+# only show pH column
+df.groupby(['quality', 'color'], as_index=False)['pH'].mean()
+
 
 
 
