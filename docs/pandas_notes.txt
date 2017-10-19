@@ -311,6 +311,25 @@ df_a = df.query('income == " >50K"')
 # query returns a dataframe
 
 
+*** PLOTTING WITH GROUP BY ***
+
+# here, white bar disappears into white background
+colors = ['red', 'white']
+df.groupby('color')['quality'].mean().plot(kind='bar', title='foo', color=colors, alpha=.7)
+
+# improve it
+import pandas as pd
+import matplotlib.pyplot as pet
+import seaboard as sns
+% matplotlib inline
+
+colors = ['red', 'white']
+color_means = df.groupby('color')['quality'].mean()
+color_means.plot(kind='bar', title='foo', color=colors, alpha=.7)
+
+plt.xlabel('Colors', fontsize=18)
+plt.ylabel('Quality', fontsize=18)
+
 
 
 
