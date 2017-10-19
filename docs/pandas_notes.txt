@@ -330,6 +330,23 @@ color_means.plot(kind='bar', title='foo', color=colors, alpha=.7)
 plt.xlabel('Colors', fontsize=18)
 plt.ylabel('Quality', fontsize=18)
 
+# more detail, though ultimately there are issues with the x-label and missing red values. solution is to move to matplotlib for more control.
+
+# counts for all columns are the same, so picking arbitrary one
+counts = df.groupby(['quality', 'color']).count()['pH']
+totals = df.groupby(['color']).count()['pH']
+
+proportions = counts/totals
+
+proportions.plot(kind='bar', title='foo', color=colors, alpha=..7)
+plt.xlabel('Quality and Color', fontsize=18)
+plt.ylabel('Proportion', fontsize=18)
+
+
+
+
+
+
 
 
 
