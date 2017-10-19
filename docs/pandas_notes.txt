@@ -319,8 +319,8 @@ df.groupby('color')['quality'].mean().plot(kind='bar', title='foo', color=colors
 
 # improve it
 import pandas as pd
-import matplotlib.pyplot as pet
-import seaboard as sns
+import matplotlib.pyplot as plt
+import seaborn as sns
 % matplotlib inline
 
 colors = ['red', 'white']
