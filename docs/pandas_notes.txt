@@ -91,6 +91,21 @@ for col in df.columns:
 # assign new labels to columns in dataframe
 df.columns = new_labels
 
+# rename column in place
+df.rename(columns={'oldName1': 'newName1', 'oldName2': 'newName2'}, inplace=True)
+
+# replace spaces with underscores and make lowercase
+df.rename(columns=lambda x: x.strip().lower().replace(" ", "_"), inplace=True)
+
+
+# confirm column labels for 2008 and 2018 datasets are identical
+df_08.columns == df_18.columns
+
+
+# make sure they're all identical like this
+(df_08.columns == df_18.columns).all()
+
+
 *** PLOTTING ***
 
 import pandas as pd
