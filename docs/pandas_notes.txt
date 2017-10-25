@@ -25,6 +25,7 @@ df.nunique()
 # unique values for column
 
 df.<colname>.unique()
+df['colname'].unique()
 
 # this returns useful descriptive statistics for each column of data (e.g. mean, std, count)
 df.describe()
@@ -32,6 +33,11 @@ df.describe()['pH']
 
 df.head(2)
 df.tail(3)
+
+
+# view missing value counts
+df.isnull().sum()
+
 
 # View the index number and label for each column
 for i, v in enumerate(df.columns):
@@ -75,6 +81,15 @@ sum(df.duplicated())
 # removing duplicates (entire row is duplicated)
 df.drop_duplicates(inplace=True)
 
+# to drop if any value in the row has a nan
+df.dropna(how='any', inplace = True);
+
+# to drop if all values in the row are nan
+df.dropna(how='all', inplace = True)
+
+# droprows where 'x' specifically is nan
+df.dropna(subset=['x'], inplace = True)
+
 
 # convert str to datetime
 df["ts"] = pd.to_datetime(df["ts"])
@@ -105,6 +120,8 @@ df_08.columns == df_18.columns
 # make sure they're all identical like this
 (df_08.columns == df_18.columns).all()
 
+# drop column
+df.drop(['age'], axis = 1, inplace = True)
 
 *** PLOTTING ***
 
