@@ -22,6 +22,10 @@ df.info()
 # this returns the number of unique values in each column
 df.nunique()
 
+# unique values for column
+
+df.<colname>.unique()
+
 # this returns useful descriptive statistics for each column of data (e.g. mean, std, count)
 df.describe()
 df.describe()['pH']
