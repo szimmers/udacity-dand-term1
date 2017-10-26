@@ -27,6 +27,9 @@ df.nunique()
 df.<colname>.unique()
 df['colname'].unique()
 
+# counts of those values
+df['colname'].value_counts()
+
 # this returns useful descriptive statistics for each column of data (e.g. mean, std, count)
 df.describe()
 df.describe()['pH']
@@ -94,6 +97,11 @@ df.dropna(subset=['x'], inplace = True)
 # convert str to datetime
 df["ts"] = pd.to_datetime(df["ts"])
 
+# convert column to int
+df['cyl'] = df['cyl'].astype(int)
+
+# Extract int from strings
+df['cyl'] = df['cyl'].str.extract('(\d+)', expand=False).astype(int)
 
 # remove "_mean" from column names
 new_labels = []
