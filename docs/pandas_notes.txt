@@ -120,6 +120,8 @@ df.rename(columns={'oldName1': 'newName1', 'oldName2': 'newName2'}, inplace=True
 # replace spaces with underscores and make lowercase
 df.rename(columns=lambda x: x.strip().lower().replace(" ", "_"), inplace=True)
 
+# rename columns, using only first 10 chars and suffixing
+df_08.rename(columns=lambda x: x[:10] + "_2008", inplace=True)
 
 # confirm column labels for 2008 and 2018 datasets are identical
 df_08.columns == df_18.columns
@@ -140,6 +142,9 @@ for c in split_columns:
     df2[c] = df2[c].apply(lambda x: x.split("/")[1])
 
 
+# merging: inner join matching on data in like column
+# c.f. https://pandas.pydata.org/pandas-docs/stable/merging.html#database-style-dataframe-joining-merging
+df_combined = pd.merge(df_08, df_18, left_on='model_2008', right_on='model')
 
 
 
