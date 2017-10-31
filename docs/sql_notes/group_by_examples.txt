@@ -118,3 +118,14 @@ GROUP BY r.name, w.channel
 ORDER BY num_events DESC;
 
 
+
+for each channel type, show avg daily occurrence
+
+select channel, avg(event_count)
+from
+(select DATE_TRUNC('day', occurred_at) as day, channel, count(*) as event_count
+from web_events
+group by 1, 2
+order by 1) sub
+group by 1
+order by 2
