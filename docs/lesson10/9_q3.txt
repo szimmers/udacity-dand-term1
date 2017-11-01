@@ -43,3 +43,24 @@ FROM (SELECT a.name
                         ORDER BY 2 DESC
                         LIMIT 1) inner_tab)
             ) counter_tab;
+
+
+
+
+MINE:
+
+select count(*)
+from (select a.name
+    from orders o
+    join accounts a
+    on a.id = o.account_id
+    group by 1
+    having SUM(o.total) > (select total from
+                                      (select SUM(o.standard_qty) as qty, SUM(o.total) as total
+                                        from orders o
+                                        join accounts a
+                                        on a.id = o.account_id
+                                        group by a.name
+                                        order by 1 desc
+                                        limit 1) t1
+                                   )) t2
