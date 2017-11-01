@@ -31,3 +31,27 @@ FROM (SELECT DATE_TRUNC('day',occurred_at) AS day,
       GROUP BY 1,2) sub
 GROUP BY channel
 ORDER BY 2 DESC;
+
+
+
+my quiz answer:
+
+select AVG(standard_qty) as std_qty, AVG(gloss_qty) as gloss_qty, AVG(poster_qty) as poster_qty, SUM(standard_amt_usd) + SUM(gloss_amt_usd) + SUM(poster_amt_usd) as total
+from orders o
+where DATE_TRUNC('month', o.occurred_at) = 
+  (select DATE_TRUNC('month', occurred_at) from orders
+  order by occurred_at asc
+  limit 1)
+
+their answer:
+
+SELECT AVG(standard_qty) avg_std, AVG(gloss_qty) avg_gls, AVG(poster_qty) avg_pst
+FROM orders
+WHERE DATE_TRUNC('month', occurred_at) = 
+     (SELECT DATE_TRUNC('month', MIN(occurred_at)) FROM orders);
+
+SELECT SUM(total_amt_usd)
+FROM orders
+WHERE DATE_TRUNC('month', occurred_at) = 
+      (SELECT DATE_TRUNC('month', MIN(occurred_at)) FROM orders);
+
