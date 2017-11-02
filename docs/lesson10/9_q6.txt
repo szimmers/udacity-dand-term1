@@ -27,3 +27,17 @@ FROM (SELECT o.account_id, AVG(o.total_amt_usd) avg_amt
                                FROM orders o
                                JOIN accounts a
                                ON a.id = o.account_id)) temp_table;
+
+
+mine:
+
+select AVG(o.total_amt_usd)
+    from orders o
+    where o.account_id in
+        (select o.account_id
+            from orders o
+            group by 1
+            HAVING AVG(o.total_amt_usd) >
+                        (select AVG(o.total_amt_usd) total_avg
+                            from orders o))
+                            
