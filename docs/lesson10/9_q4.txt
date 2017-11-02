@@ -27,3 +27,24 @@ GROUP BY 1, 2
 ORDER BY 3 DESC;
 
 I added an ORDER BY for no real reason, and the account name to assure I was only pulling from only one account.
+
+
+
+
+
+mine:
+
+select w.channel, COUNT(w.channel)
+from web_events w
+where account_id =
+    (select account_id from
+        (select a.id as account_id, SUM(o.total_amt_usd) as totals
+            from accounts a
+            join orders o
+            on o.account_id = a.id
+            group by 1
+            order by 2 desc
+            limit 1) t1)
+group by 1
+order by 2 desc
+
