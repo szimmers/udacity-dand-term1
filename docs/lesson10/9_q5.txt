@@ -20,3 +20,35 @@ FROM (SELECT a.id, a.name, SUM(o.total_amt_usd) tot_spent
       GROUP BY a.id, a.name
       ORDER BY 3 DESC
        LIMIT 10) temp;
+
+
+mine:
+
+# this shows the top 10 and the avg for each
+select a.name, AVG(o.total_amt_usd)
+    from accounts a
+    join orders o
+    on o.account_id = a.id
+    where a.id in
+        (select account_id
+            from (select a.id as account_id, SUM(o.total_amt_usd)
+                from accounts a
+                join orders o
+                on o.account_id = a.id
+                group by 1
+                order by 2 desc
+                limit 10) t1)
+    group by 1
+    order by 2 desc
+
+
+# but i guess they wanted the avg for all of them
+
+select AVG(totals)
+    from (select a.id as account_id, SUM(o.total_amt_usd) totals
+            from accounts a
+            join orders o
+            on o.account_id = a.id
+            group by 1
+            order by 2 desc
+            limit 10) t1
