@@ -1,0 +1,33 @@
+1. Use the accounts table to create a first and last name column that hold the first and last names for the primary_poc.
+
+mine:
+
+select LEFT(primary_poc, STRPOS(primary_poc, ' ') - 1) as first_name,
+        RIGHT(primary_poc, LENGTH(primary_poc) - STRPOS(primary_poc, ' ')) as last_name
+from accounts
+
+
+theirs:
+
+SELECT LEFT(primary_poc, STRPOS(primary_poc, ' ') -1 ) first_name,
+RIGHT(primary_poc, LENGTH(primary_poc) - STRPOS(primary_poc, ' ')) last_name
+FROM accounts;
+
+
+
+2. Now see if you can do the same thing for all of the name of each rep in the sales_rep table.
+Again provide a first and last name column.
+
+
+mine:
+
+select LEFT(name, STRPOS(name, ' ') - 1) as first_name,
+        RIGHT(name, LENGTH(name) - STRPOS(name, ' ')) as last_name
+from sales_reps
+
+
+theirs:
+
+SELECT LEFT(name, STRPOS(name, ' ') -1 ) first_name, 
+       RIGHT(name, LENGTH(name) - STRPOS(name, ' ')) last_name
+FROM sales_reps;
