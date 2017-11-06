@@ -16,3 +16,19 @@ GROUP BY 1, 2
 ORDER BY 3 DESC;
 
 
+MINE:
+
+WITH get_acct_w_most_total_sales AS (select a.id as account_id, SUM(o.total_amt_usd) as totals
+            from accounts a
+            join orders o
+            on o.account_id = a.id
+            group by 1
+            order by 2 desc
+            limit 1)
+
+select w.channel, COUNT(w.channel)
+    from web_events w
+    where account_id =
+        (select account_id from get_acct_w_most_total_sales)
+    group by 1
+    order by 2 desc
