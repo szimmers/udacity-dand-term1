@@ -1,4 +1,4 @@
-For the account that purchased the most (in total of their lifetime as a customer) standard_qty paper, how many accounts still had more in total purchases? 
+3. For the account that purchased the most (in total of their lifetime as a customer) standard_qty paper, how many accounts still had more in total purchases? 
 
 WITH t1 AS (
   SELECT a.name account_name, SUM(o.standard_qty) total_std, SUM(o.total) total
@@ -18,4 +18,25 @@ t2 AS (
 SELECT COUNT(*)
 FROM t2;
 
+
+
+MINE:
+
+WITH get_highest_total AS (select SUM(o.standard_qty) as qty, SUM(o.total) as total
+                                        from orders o
+                                        join accounts a
+                                        on a.id = o.account_id
+                                        group by a.name
+                                        order by 1 desc
+                                        limit 1),
+
+    get_acct_names_higher_total_purchases_than_cust_w_highest_std_qty AS (select a.name
+        from orders o
+        join accounts a
+        on a.id = o.account_id
+        group by 1
+        having SUM(o.total) > (select total from get_highest_total))
+
+select count(*)
+    from get_acct_names_higher_total_purchases_than_cust_w_highest_std_qty
 
