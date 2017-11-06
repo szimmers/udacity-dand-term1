@@ -1,4 +1,4 @@
-What is the lifetime average amount spent in terms of total_amt_usd for only the companies that spent more than the average of all accounts.
+6. What is the lifetime average amount spent in terms of total_amt_usd for only the companies that spent more than the average of all accounts.
 
 WITH t1 AS (
    SELECT AVG(o.total_amt_usd) avg_all
@@ -12,3 +12,18 @@ t2 AS (
    HAVING AVG(o.total_amt_usd) > (SELECT * FROM t1))
 SELECT AVG(avg_amt)
 FROM t2;
+
+
+MINE:
+
+WITH get_mean_total_amt AS (select AVG(o.total_amt_usd) total_avg
+                            from orders o),
+
+    get_accts_with_total_amt_gt_mean AS (select o.account_id acct_ids
+                            from orders o
+                            group by 1
+                            HAVING AVG(o.total_amt_usd) > (select total_avg from get_mean_total_amt))
+
+select AVG(o.total_amt_usd)
+    from orders o
+    where o.account_id in (select acct_ids from get_accts_with_total_amt_gt_mean)
