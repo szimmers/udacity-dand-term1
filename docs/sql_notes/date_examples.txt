@@ -1,0 +1,1 @@
+DATE_PART('month', TO_DATE(month, 'month')) here changed a month name into the number associated with that particular month.
