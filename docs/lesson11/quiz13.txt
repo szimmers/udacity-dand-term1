@@ -1,0 +1,24 @@
+
+select *
+from sf_crime_data
+limit 10
+
+
+select LEFT(date, 2) as month, SUBSTRING(date, 4, 2) as date2, SUBSTRING(date, 7, 4) as year
+from sf_crime_data
+limit 10
+
+
+select (SUBSTRING(date, 7, 4) || '-' || LEFT(date, 2) || '-' || SUBSTRING(date, 4, 2))::DATE AS new_date
+from sf_crime_data
+limit 10
+
+
+
+theirs:
+
+SELECT date orig_date, (SUBSTR(date, 7, 4) || '-' || LEFT(date, 2) || '-' || SUBSTR(date, 4, 2)) new_date
+FROM sf_crime_data;
+
+SELECT date orig_date, (SUBSTR(date, 7, 4) || '-' || LEFT(date, 2) || '-' || SUBSTR(date, 4, 2))::DATE new_date
+FROM sf_crime_data;
