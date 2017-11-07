@@ -1,0 +1,146 @@
+original:
+
+1. run this
+
+SELECT *
+FROM accounts a
+LEFT JOIN orders o
+ON a.id = o.account_id
+WHERE o.total IS NULL;
+
+
+https://www.w3resource.com/PostgreSQL/postgresql-left-join.php
+
+In PostgreSQL LEFT JOIN, table2 depends on table1 and all tables on which table1 depends and
+also table1 depends on all tables that are used in the LEFT JOIN condition except table2.
+The LEFT JOIN condition is used to decide how to retrieve rows from table2.
+
+2. use coalesce to fill in the accounts.id column w/ the account.id for the NULL
+value from 1)
+
+mine:
+
+SELECT COALESCE(a.id, a.id) as actual_account_id, *
+FROM accounts a
+LEFT JOIN orders o
+ON a.id = o.account_id
+WHERE o.total IS NULL;
+
+theirs:
+
+SELECT COALESCE(a.id, a.id) filled_id, a.name, a.website, a.lat, a.long, a.primary_poc, a.sales_rep_id, o.*
+FROM accounts a
+LEFT JOIN orders o
+ON a.id = o.account_id
+WHERE o.total IS NULL;
+
+
+3. use coalesce to fill in the orders.account_id column w/ the account.id for the NULL
+value from 1)
+
+mine:
+
+SELECT COALESCE(a.id, a.id) as actual_account_id, COALESCE(o.account_id, a.id) as account_id
+FROM accounts a
+LEFT JOIN orders o
+ON a.id = o.account_id
+WHERE o.total IS NULL;
+
+theirs:
+
+SELECT COALESCE(a.id, a.id) filled_id, a.name, a.website, a.lat, a.long, a.primary_poc, a.sales_rep_id, COALESCE(o.account_id, a.id) account_id, o.occurred_at, o.standard_qty, o.gloss_qty, o.poster_qty, o.total, o.standard_amt_usd, o.gloss_amt_usd, o.poster_amt_usd, o.total_amt_usd
+FROM accounts a
+LEFT JOIN orders o
+ON a.id = o.account_id
+WHERE o.total IS NULL;
+
+
+4. use coalesce to fill in each of the qty and usd columns with 0
+
+SELECT a.name, COALESCE(a.id, a.id) as actual_account_id, COALESCE(o.account_id, a.id) as account_id,
+    COALESCE(o.standard_qty, 0) standard_qty,
+    COALESCE(o.gloss_qty, 0) gloss_qty,
+    COALESCE(o.poster_qty, 0) poster_qty,
+    COALESCE(o.total, 0) total,
+    COALESCE(o.standard_amt_usd, 0) standard_amt_usd,
+    COALESCE(o.gloss_amt_usd, 0) gloss_amt_usd,
+    COALESCE(o.poster_amt_usd, 0) poster_amt_usd,
+    COALESCE(o.total_amt_usd, 0) total_amt_usd
+
+    FROM accounts a
+    LEFT JOIN orders o
+    ON a.id = o.account_id
+    WHERE o.total IS NULL;
+
+theirs:
+
+SELECT COALESCE(a.id, a.id) filled_id, a.name, a.website, a.lat, a.long, a.primary_poc, a.sales_rep_id, COALESCE(o.account_id, a.id) account_id, o.occurred_at, COALESCE(o.standard_qty, 0) standard_qty, COALESCE(o.gloss_qty,0) gloss_qty, COALESCE(o.poster_qty,0) poster_qty, COALESCE(o.total,0) total, COALESCE(o.standard_amt_usd,0) standard_amt_usd, COALESCE(o.gloss_amt_usd,0) gloss_amt_usd, COALESCE(o.poster_amt_usd,0) poster_amt_usd, COALESCE(o.total_amt_usd,0) total_amt_usd
+FROM accounts a
+LEFT JOIN orders o
+ON a.id = o.account_id
+WHERE o.total IS NULL;
+
+
+5. run the query in 1), with the WHERE removed and COUNT the # of ids
+
+SELECT COUNT(*)
+FROM accounts a
+LEFT JOIN orders o
+ON a.id = o.account_id
+
+--> 6913
+
+
+6. run the query in 5), but w/ the COALESCE functions used in questions 2) - 4)
+(???)
+
+mine:
+
+
+SELECT COUNT(COALESCE(a.id, a.id))
+FROM accounts a
+LEFT JOIN orders o
+ON a.id = o.account_id
+
+--> 6913
+
+SELECT a.name, COALESCE(a.id, a.id) as actual_account_id, COALESCE(o.account_id, a.id) as account_id,
+    COALESCE(o.standard_qty, 0) standard_qty,
+    COALESCE(o.gloss_qty, 0) gloss_qty,
+    COALESCE(o.poster_qty, 0) poster_qty,
+    COALESCE(o.total, 0) total,
+    COALESCE(o.standard_amt_usd, 0) standard_amt_usd,
+    COALESCE(o.gloss_amt_usd, 0) gloss_amt_usd,
+    COALESCE(o.poster_amt_usd, 0) poster_amt_usd,
+    COALESCE(o.total_amt_usd, 0) total_amt_usd
+
+    FROM accounts a
+    LEFT JOIN orders o
+    ON a.id = o.account_id
+
+theirs:
+
+SELECT COALESCE(a.id, a.id) filled_id, a.name, a.website, a.lat, a.long, a.primary_poc, a.sales_rep_id, COALESCE(o.account_id, a.id) account_id, o.occurred_at, COALESCE(o.standard_qty, 0) standard_qty, COALESCE(o.gloss_qty,0) gloss_qty, COALESCE(o.poster_qty,0) poster_qty, COALESCE(o.total,0) total, COALESCE(o.standard_amt_usd,0) standard_amt_usd, COALESCE(o.gloss_amt_usd,0) gloss_amt_usd, COALESCE(o.poster_amt_usd,0) poster_amt_usd, COALESCE(o.total_amt_usd,0) total_amt_usd
+FROM accounts a
+LEFT JOIN orders o
+ON a.id = o.account_id;
+
+
+
+
+
+
+
+discovery:
+
+SELECT *
+FROM accounts a
+where a.name = 'Goldman Sachs Group'
+
+SELECT *
+FROM orders o
+where o.account_id = '1731'
+
+SELECT *
+FROM orders o
+WHERE o.total IS NULL;
