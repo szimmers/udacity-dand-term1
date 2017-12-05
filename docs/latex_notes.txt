@@ -1,2 +1,5 @@
 $H_{0}: \mu_{c} = \mu_{nc}$ <br/>
 $H_{1}: \mu_{c} \neq \mu_{nc}$
+
+$H_{0}: \mu_{height} = 67.6~in$ <br/>
+$H_{1}: \mu_{height} \neq 67.6~in$
